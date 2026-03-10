@@ -961,7 +961,7 @@ export default function Profile() {
 
   // ── GitHub connect ────────────────────────────────────────────────
   const handleConnectGitHub = () => {
-    window.location.href = "http://localhost:3000/github/Oauth";
+    window.location.href = "https://togetherly-z8yh.onrender.com/github/Oauth";
   };
 
   // ── New post prepended to feed ────────────────────────────────────
