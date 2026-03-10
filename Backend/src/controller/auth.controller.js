@@ -40,7 +40,47 @@ exports.register = async (req, res, next) => {
 await sendEmail(
   email,
   "Verify Your Linkora Account",
-  `Your OTP is ${otp}`
+  `
+  <div style="font-family: Arial, sans-serif; background:#f5f7fb; padding:40px;">
+    <div style="max-width:500px; margin:auto; background:#ffffff; padding:30px; border-radius:10px; text-align:center; box-shadow:0 4px 10px rgba(0,0,0,0.05);">
+      
+      <h2 style="color:#333;">Verify Your Linkora Account</h2>
+      
+      <p style="color:#555; font-size:16px;">
+        Use the verification code below to complete your registration.
+      </p>
+
+      <div style="
+        font-size:34px;
+        font-weight:bold;
+        letter-spacing:8px;
+        color:#111;
+        background:#f1f3f5;
+        padding:15px 20px;
+        border-radius:8px;
+        display:inline-block;
+        margin:20px 0;
+      ">
+        ${otp}
+      </div>
+
+      <p style="color:#666; font-size:14px;">
+        This OTP will expire in <b>10 minutes</b>.
+      </p>
+
+      <p style="color:#999; font-size:13px; margin-top:30px;">
+        If you didn’t request this email, you can safely ignore it.
+      </p>
+
+      <hr style="margin:25px 0; border:none; border-top:1px solid #eee;" />
+
+      <p style="color:#aaa; font-size:12px;">
+        © ${new Date().getFullYear()} Linkora. All rights reserved.
+      </p>
+
+    </div>
+  </div>
+  `
 );
 
     res.status(201).json({
