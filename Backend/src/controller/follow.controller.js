@@ -11,8 +11,8 @@ const toggleFollow = async (req, res) => {
       });
     }
 
-    const targetUser = await User.findById(targetUserId);
-    const currentUser = await User.findById(currentUserId);
+    const targetUser = await User.findById(targetUserId , {isDisabled:false});
+    const currentUser = await User.findById(currentUserId , {idDisabled:false});
 
     if (!targetUser) {
       return res.status(404).json({

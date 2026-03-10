@@ -5,13 +5,13 @@ const getPosts = async (req, res) => {
     const page = Number(req.query.page) || 1;
     const limit = 10;
 
-    const posts = await Post.find()
+    const posts = await Post.find({isDisabled:false , isDeleted:false})
       .populate("author", "name email  profilePic")
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
       .limit(limit);
 
-    const totalPosts = await Post.countDocuments();
+    const totalPosts = await Post.countDocuments({ isDisabled: false });
 
     res.status(200).json({
       success: true,

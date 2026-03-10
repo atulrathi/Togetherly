@@ -21,7 +21,11 @@ const commentSchema = new mongoose.Schema(
       type: Boolean,
       default: false
     },
-    deletedAt: {
+    isDisabled: {
+      type: Boolean,
+      default: false
+    },
+    disabledAt: {
       type: Date
     }
   },

@@ -4,6 +4,7 @@ const { hashPassword, comparePassword } = require("../utils/hashpass");
 const generateOtp = require("../utils/otp");
 const sendEmail = require("../utils/sendemail");
 const Otp = require("../models/otpmodel");
+const Post = require("../models/postmodel");
 
 //register
 exports.register = async (req, res, next) => {
@@ -36,29 +37,15 @@ exports.register = async (req, res, next) => {
       expiresAt: new Date(Date.now() + 10 * 60 * 1000),
     });
 
-    // ✅ generate token
-    const token = generateToken(user._id);
-res.cookie("token", token, {
-  httpOnly: true,
-  secure: true,
-  sameSite: "none",
-  path: "/",
-  maxAge: 7 * 24 * 60 * 60 * 1000,
-});
-
-    // ✅ SEND RESPONSE IMMEDIATELY
-    res.status(201).json({
-      message: "User registered successfully",
-      user,
-    });
-
-    // ✅ EMAIL SENT AFTER RESPONSE (background)
-    sendEmail(
+    await sendEmail(
       email,
       "Verify Your Linkora Account",
-      `Your OTP is ${otp}`
-    ).catch(err => console.error("Email failed:", err));
+      `Your OTP is ${otp}`,
+    ).catch((err) => console.error("Email failed:", err));
 
+    res.status(201).json({
+      message: "User registered successfully",
+    });
   } catch (error) {
     next(error);
   }
@@ -86,21 +73,25 @@ exports.login = async (req, res, next) => {
     }
 
     user.lastLoginAt = new Date();
+    user.isDisabled = false;
     await user.save();
 
     const token = generateToken(user._id);
 
-res.cookie("token", token, {
-  httpOnly: true,
-  secure: true,
-  sameSite: "none",
-  path: "/",
-  maxAge: 7 * 24 * 60 * 60 * 1000,
-});
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      path: "/",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
 
     res.status(200).json({
-      user:user.username,
+      success: "login ",
+      username: user.username,
     });
+    await Post.updateMany({ author: user._id }, { $set: { isDisabled: false } });
+    await Post.save();
   } catch (error) {
     next(error);
   }
@@ -130,13 +121,13 @@ exports.verifyOtp = async (req, res, next) => {
 
     const token = generateToken(user._id);
 
-res.cookie("token", token, {
-  httpOnly: true,
-  secure: true,
-  sameSite: "none",
-  path: "/",
-  maxAge: 7 * 24 * 60 * 60 * 1000,
-});
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      path: "/",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
 
     await Otp.deleteMany({ user: user._id });
 
@@ -150,13 +141,13 @@ res.cookie("token", token, {
 
 //Logout
 exports.logout = async (req, res) => {
-res.cookie("token", "", {
-  httpOnly: true,
-  secure: true,
-  sameSite: "none",
-  path: "/",
-  maxAge: 7 * 24 * 60 * 60 * 1000,
-});
+  res.cookie("token", "", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    path: "/",
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  });
 
   res.status(200).json({ message: "Logged out successfully" });
 };

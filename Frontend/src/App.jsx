@@ -16,6 +16,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import VerifyEmail from "./pages/VerifyEmail";
 import Navbar from "./components/layout/Navbar";
+import UserProfile from "./pages/Otheruserprofile";
 
 const AUTH_ROUTES = ["/", "/register", "/verify-email"];
 
@@ -59,6 +60,14 @@ function AppLayout() {
               element={
                 <ProtectedRoute>
                   <Profile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/user-profile/:username"
+              element={
+                <ProtectedRoute>
+                  <UserProfile />
                 </ProtectedRoute>
               }
             />

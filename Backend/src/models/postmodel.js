@@ -46,6 +46,10 @@ const postSchema = new mongoose.Schema(
     isDeleted: {
       type: Boolean,
       default: false
+    },
+    isDisabled: {
+      type: Boolean,
+      default: false
     }
   },
   {

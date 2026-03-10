@@ -7,9 +7,9 @@ const addComment = async (req, res) => {
     const { text } = req.body;
     const postId = req.params.postId;
 
-    const post = await Post.findById(postId);
+    const post = await Post.findById(postId , {isDisabled:false});
 
-    if (!post || post.isDeleted) {
+    if (!post || post.isDisabled) {
       return res.status(404).json({ message: "Post not found" });
     }
 
@@ -39,7 +39,7 @@ const getComments = async (req, res) => {
 
     const comments = await Comment.find({
       post: postId,
-      isDeleted: false
+      isDisabled: false
     })
       .populate("user", "name profilePic")
       .sort({ createdAt: -1 })
@@ -48,7 +48,7 @@ const getComments = async (req, res) => {
 
     const totalComments = await Comment.countDocuments({
       post: postId,
-      isDeleted: false
+      isDisabled: false
     });
 
     res.status(200).json({
@@ -78,8 +78,8 @@ const deleteComment = async (req, res) => {
       return res.status(403).json({ message: "Not authorized" });
     }
 
-    comment.isDeleted = true;
-    comment.deletedAt = new Date();
+    comment.isDisabled = true;
+    comment.disabledAt = new Date();
 
     await comment.save();
 

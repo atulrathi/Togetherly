@@ -1,18 +1,30 @@
 const Post = require("../models/postmodel");
+const User = require("../models/usermodel")
 
 const createPost = async (req, res) => {
   try {
     const { content} = req.body;
+    const userId = req.user._id;
+
+    const user = await User.findById(userId , { isDisabled: false });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
 
     const post = await Post.create({
       author: req.user._id,
       content,
     });
 
+    user.posts.push(post._id);
+    await user.save();
+
     res.status(201).json({
       success: true,
       message: "Post created successfully",
-      post,
     });
 
   } catch (error) {
@@ -29,7 +41,7 @@ const toggleLike = async (req, res) => {
     const postId = req.params.postId;
     const userId = req.user._id;
 
-    const post = await Post.findById(postId);
+    const post = await Post.findById(postId, { isDisabled: false });
 
     if (!post) {
       return res.status(404).json({ message: "Post not found" });

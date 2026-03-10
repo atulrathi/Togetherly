@@ -4,8 +4,9 @@ const Post = require("../models/postmodel");
 const getUserByUsername = async (req, res) => {
   try {
     const id = req.user._id;
+    const username = req.params.username;
 
-    const user = await User.findOne({ _id: id })
+    const user = await User.findOne({ _id: id  , isDisabled: false })
       .select("-password -googleId -__v")
       .lean();
 
@@ -16,8 +17,15 @@ const getUserByUsername = async (req, res) => {
       });
     }
 
+    if(user.username !== username){
+      return res.status(403).json({
+        success: false,
+        message: "You are not authorized to view this user's profile.",
+      });
+    }
+
     // Fetch the user's post count in parallel — no need to load all posts.
-    const postCount = await Post.countDocuments({ author: id });
+    const postCount = await Post.countDocuments({ author: id , isDisabled: false });
 
     return res.status(200).json({
       success: true,
@@ -91,4 +99,51 @@ const uploadcoverphoto = async (req, res) => {
   }
 };
 
-module.exports = { getUserByUsername , uploadProfileImage , uploadcoverphoto };
+const addBio = async (req, res) => {
+  try {
+    const { bio } = req.body;
+    const userid = req.user._id;
+    const user = await User.findById(userid , { isDisabled: false });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.bio = bio;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Bio added successfully",
+    });
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const changeUsername = async (req,res)=>{
+  try{
+    const {username} = req.body;
+    const userid = req.user._id
+    const user = await User.findById(userid, { isDisabled: false });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    // Check if the new username is already taken
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      return res.status(400).json({ message: "Username already taken" });
+    }
+    user.username = username;
+    await user.save();
+    res.status(200).json({
+      success: true,
+      message: "Username updated successfully",
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+module.exports = { getUserByUsername , uploadProfileImage , uploadcoverphoto, addBio , changeUsername};
