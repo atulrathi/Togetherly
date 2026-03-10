@@ -131,7 +131,6 @@ exports.login = async (req, res, next) => {
       username: user.username,
     });
     await Post.updateMany({ author: user._id }, { $set: { isDisabled: false } });
-    await Post.save();
   } catch (error) {
     next(error);
   }

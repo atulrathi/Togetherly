@@ -1,0 +1,163 @@
+[33mcommit 4a13ccc832be3f8b83ad3fc6b0bdeb2dc40605bc[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: atul rathi <rathiatul43@gmal.com>
+Date:   Tue Mar 10 16:39:25 2026 +0530
+
+    add resend servce to get otp
+
+[33mcommit e1042769d8395459cb016455cf50a9c82d2f6cda[m
+Author: atul rathi <rathiatul43@gmal.com>
+Date:   Tue Mar 10 16:37:08 2026 +0530
+
+    add resnd service to send otps
+
+[33mcommit 748692f1dca1e81e1fa13654d9285f948e0cf7d3[m
+Author: atul rathi <rathiatul43@gmal.com>
+Date:   Tue Mar 10 13:25:13 2026 +0530
+
+    change the nodemailer to sendGrod
+
+[33mcommit aaf0391b36fb9bf67737cb8829d6a8f2e7c29d85[m
+Merge: 8f21ae0 ee94b82
+Author: atul rathi <rathiatul43@gmal.com>
+Date:   Tue Mar 10 11:43:13 2026 +0530
+
+    add search box
+
+[33mcommit ee94b82df039864655677904f352fc9b52d6f269[m
+Author: atul rathi <rathiatul43@gmal.com>
+Date:   Tue Mar 10 11:40:24 2026 +0530
+
+    add search box for search users
+
+[33mcommit e478f5059eccbb942fa340b1a3d05dd7f8769100[m
+Author: atul rathi <rathiatul43@gmal.com>
+Date:   Sat Mar 7 22:31:57 2026 +0530
+
+    add edit profile option with backend
+
+[33mcommit 8f21ae0eb31132706ac015ce12f19a7fbd92038d[m
+Author: atul rathi <rathiatul43@gmal.com>
+Date:   Thu Mar 5 15:24:46 2026 +0530
+
+    fix url error
+
+[33mcommit bcb1d334f8d5f1f9fe2e08ba0860a4e78cea5f18[m
+Author: atul rathi <rathiatul43@gmal.com>
+Date:   Thu Mar 5 15:20:21 2026 +0530
+
+     fix error
+
+[33mcommit fce9e93a0e814efc0a0f661e969878043edd9137[m
+Author: atul rathi <rathiatul43@gmal.com>
+Date:   Thu Mar 5 15:04:10 2026 +0530
+
+    git integration
+
+[33mcommit 2022adc2e08fc29f20c0c84419f075f5fa3b36d0[m
+Author: atul rathi <rathiatul43@gmal.com>
+Date:   Thu Mar 5 15:00:37 2026 +0530
+
+    fix url error
+
+[33mcommit 16e427799bdee0641da34f5e2948775774361172[m
+Merge: 16cb8b2 d2b3a0e
+Author: atul rathi <rathiatul43@gmal.com>
+Date:   Thu Mar 5 14:52:55 2026 +0530
+
+    fix git intergration
+
+[33mcommit d2b3a0e72f4363c8bd5e6801dc83b1353928790d[m
+Author: atul rathi <rathiatul43@gmal.com>
+Date:   Thu Mar 5 14:50:14 2026 +0530
+
+    fix git integration error
+
+[33mcommit 16cb8b27ab05429611d0b6317471f95ba0979aec[m
+Author: atul rathi <rathiatul43@gmal.com>
+Date:   Thu Mar 5 12:54:46 2026 +0530
+
+    fix backend url
+
+[33mcommit f7da8368fc9288d8c1ba3eeec422f6438ac3449b[m
+Author: atul rathi <rathiatul43@gmal.com>
+Date:   Thu Mar 5 12:41:48 2026 +0530
+
+    integrage github
+
+[33mcommit ee353e9fa4bb7424c663127547d7475a130bd34f[m
+Author: atul rathi <rathiatul43@gmal.com>
+Date:   Mon Mar 2 20:02:01 2026 +0530
+
+    again fix routin error
+
+[33mcommit 7c1132e2af963ec0148bf5c37f9a3e0b886e7a63[m
+Author: atul rathi <rathiatul43@gmal.com>
+Date:   Mon Mar 2 19:55:05 2026 +0530
+
+    fix routing bug
+
+[33mcommit bebb720b0a21682e6eb4361e7f01d9295f318c27[m
+Author: atul rathi <rathiatul43@gmal.com>
+Date:   Mon Mar 2 16:49:11 2026 +0530
+
+    fix url problem
+
+[33mcommit 27af5a076bffcb17f954ae7e1f25158069d4f3d8[m
+Author: atul rathi <rathiatul43@gmal.com>
+Date:   Mon Mar 2 16:38:23 2026 +0530
+
+     add profile and cover photo function
+
+[33mcommit 8a25a4a0e060c326fa1a2362683a4302301d1be3[m
+Author: atul rathi <rathiatul43@gmal.com>
+Date:   Sun Feb 22 18:26:51 2026 +0530
+
+     fix backend bugs
+
+[33mcommit 4188761d49bf87bfe6a78296d546b75b3e1f5a83[m
+Author: atul rathi <rathiatul43@gmal.com>
+Date:   Sun Feb 22 18:16:08 2026 +0530
+
+    fix url bugs
+
+[33mcommit 3bf31e48778bb38890b5975e406e3c66cf95e430[m
+Author: atul rathi <rathiatul43@gmal.com>
+Date:   Sun Feb 22 17:49:54 2026 +0530
+
+    fix registration code
+
+[33mcommit 60793db76069a97b8aff827f6d9905e735231266[m
+Author: atul rathi <rathiatul43@gmal.com>
+Date:   Sun Feb 22 17:32:11 2026 +0530
+
+    change urls
+
+[33mcommit 87b6c58dd08a7d4bd28b19b41fca500b47f11078[m
+Author: atul rathi <rathiatul43@gmal.com>
+Date:   Sun Feb 22 17:17:32 2026 +0530
+
+    fix errors
+
+[33mcommit 900609ca8d90534458deb78331682c99d53b52cf[m
+Author: atul rathi <rathiatul43@gmal.com>
+Date:   Sun Feb 22 16:12:25 2026 +0530
+
+    profile homepage and messages to the front end
+
+[33mcommit a7f0f7f76ede18ce67110767e4171733623d4de6[m
+Author: atul rathi <rathiatul43@gmal.com>
+Date:   Fri Feb 20 15:21:13 2026 +0530
+
+    add login register and other UI UX in frontend
+
+[33mcommit e8fabdf411dd9d72799d3a2e6a4822f6eac42d6e[m
+Author: atul rathi <rathiatul43@gmal.com>
+Date:   Thu Feb 19 22:49:55 2026 +0530
+
+     basic backend complete and start frontend setup
+
+[33mcommit 8678b807b981de75c8ed0e366afff970e11c4f4a[m
+Author: atul rathi <rathiatul43@gmal.com>
+Date:   Thu Feb 19 10:03:04 2026 +0530
+
+    set up Authentication

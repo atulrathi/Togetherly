@@ -28,7 +28,7 @@ import {
 import axiosInstance from "../services/axiosInstance";
 import FollowModel from "../components/ui/follow";
 import AddBio from "../components/ui/Addbio";
-import EditProfile from "../components/ui/EditProfile";
+import EditProfile from "../components/ui/Editprofile";
 
 // ─── Post Card ───────────────────────────────────────────────────────────────
 function PostCard({ post, initial, index, onDelete }) {
