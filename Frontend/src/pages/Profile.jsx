@@ -36,7 +36,6 @@ function PostCard({ post, initial, index, onDelete }) {
   const [bookmarked, setBookmarked] = useState(false);
   const [likeCount, setLikeCount] = useState(post.likes ?? 0);
 
-  // Three-dot menu state
   const [menuOpen, setMenuOpen] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -62,7 +61,6 @@ function PostCard({ post, initial, index, onDelete }) {
     setLikeCount((c) => (liked ? c - 1 : c + 1));
   };
 
-  // Close menu on outside click
   useEffect(() => {
     if (!menuOpen) return;
     const handler = (e) => {
@@ -75,13 +73,8 @@ function PostCard({ post, initial, index, onDelete }) {
     return () => document.removeEventListener("mousedown", handler);
   }, [menuOpen]);
 
-  const handleDeleteClick = () => {
-    setConfirmDelete(true);
-  };
-
-  const handleCancelDelete = () => {
-    setConfirmDelete(false);
-  };
+  const handleDeleteClick = () => setConfirmDelete(true);
+  const handleCancelDelete = () => setConfirmDelete(false);
 
   const handleConfirmDelete = async () => {
     setDeleting(true);
@@ -121,7 +114,6 @@ function PostCard({ post, initial, index, onDelete }) {
         </div>
 
         <div className="min-w-0 flex-1">
-          {/* Header row: name + three-dot menu */}
           <div className="flex items-start justify-between gap-2">
             <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
               <span className="text-sm font-semibold text-white">
@@ -159,20 +151,14 @@ function PostCard({ post, initial, index, onDelete }) {
                     initial={{ opacity: 0, scale: 0.92, y: -4 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.92, y: -4 }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 500,
-                      damping: 36,
-                    }}
+                    transition={{ type: "spring", stiffness: 500, damping: 36 }}
                     className="absolute right-0 top-full z-30 mt-1.5 w-56 overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0d1525] shadow-2xl shadow-black/80"
                     style={{ transformOrigin: "top right" }}
                   >
-                    {/* Top accent */}
                     <div className="h-[1.5px] w-full bg-gradient-to-r from-transparent via-red-500/40 to-transparent" />
 
                     <AnimatePresence mode="wait">
                       {!confirmDelete ? (
-                        /* ── Default menu ── */
                         <motion.div
                           key="default-menu"
                           initial={{ opacity: 0 }}
@@ -192,7 +178,6 @@ function PostCard({ post, initial, index, onDelete }) {
                           </button>
                         </motion.div>
                       ) : (
-                        /* ── Confirm delete panel ── */
                         <motion.div
                           key="confirm-menu"
                           initial={{ opacity: 0, y: 4 }}
@@ -201,13 +186,9 @@ function PostCard({ post, initial, index, onDelete }) {
                           transition={{ duration: 0.15 }}
                           className="p-3"
                         >
-                          {/* Warning icon */}
                           <div className="mb-3 flex flex-col items-center gap-2 pt-1 text-center">
                             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-500/10 ring-1 ring-red-500/20">
-                              <TriangleAlert
-                                size={16}
-                                className="text-red-400"
-                              />
+                              <TriangleAlert size={16} className="text-red-400" />
                             </div>
                             <div>
                               <p className="text-xs font-semibold text-white">
@@ -219,10 +200,8 @@ function PostCard({ post, initial, index, onDelete }) {
                             </div>
                           </div>
 
-                          {/* Divider */}
                           <div className="mb-2.5 h-px bg-white/[0.05]" />
 
-                          {/* Action buttons */}
                           <div className="flex flex-col gap-1.5">
                             <motion.button
                               whileTap={{ scale: 0.96 }}
@@ -232,10 +211,7 @@ function PostCard({ post, initial, index, onDelete }) {
                             >
                               {deleting ? (
                                 <>
-                                  <Loader2
-                                    size={11}
-                                    className="animate-spin"
-                                  />
+                                  <Loader2 size={11} className="animate-spin" />
                                   Deleting…
                                 </>
                               ) : (
@@ -293,7 +269,7 @@ function PostCard({ post, initial, index, onDelete }) {
               }
             >
               <Heart size={13} fill={liked ? "currentColor" : "none"} />
-              <span>{likeCount}</span>
+              <span>{fmt(likeCount)}</span>
             </button>
             <button className="flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-xs font-medium text-gray-600 transition-all hover:bg-indigo-500/10 hover:text-indigo-400">
               <MessageCircle size={13} />
@@ -352,16 +328,16 @@ function GitHubRepoCard({ repo, index }) {
           <div className="flex items-center gap-2">
             <Github
               size={14}
-              className="shrink-0 text-gray-500 group-hover:text-indigo-400 transition-colors"
+              className="shrink-0 text-gray-500 transition-colors group-hover:text-indigo-400"
             />
-            <h3 className="truncate text-sm font-semibold text-white group-hover:text-indigo-300 transition-colors">
+            <h3 className="truncate text-sm font-semibold text-white transition-colors group-hover:text-indigo-300">
               {repo.name}
             </h3>
           </div>
         </div>
         <ExternalLink
           size={13}
-          className="shrink-0 text-gray-600 opacity-0 group-hover:opacity-100 transition-opacity"
+          className="shrink-0 text-gray-600 opacity-0 transition-opacity group-hover:opacity-100"
         />
       </div>
 
@@ -394,9 +370,7 @@ function GitHubRepoCard({ repo, index }) {
         {repo.forks_count > 0 && (
           <div className="flex items-center gap-1">
             <GitFork size={11} className="text-emerald-500/70" />
-            <span className="text-[10px] text-gray-500">
-              {repo.forks_count}
-            </span>
+            <span className="text-[10px] text-gray-500">{repo.forks_count}</span>
           </div>
         )}
         {repo.watchers_count > 0 && (
@@ -408,7 +382,7 @@ function GitHubRepoCard({ repo, index }) {
           </div>
         )}
       </div>
-      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-indigo-500/0 via-indigo-500/0 to-indigo-500/0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none" />
+      <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-r from-indigo-500/0 via-indigo-500/0 to-indigo-500/0 opacity-0 transition-opacity duration-300 group-hover:opacity-10" />
     </motion.a>
   );
 }
@@ -435,7 +409,7 @@ function ConnectGitHub({ onConnect }) {
       </div>
       <button
         onClick={onConnect}
-        className="mt-2 flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-600 to-indigo-500 px-5 py-2 text-xs font-semibold text-white shadow-lg shadow-indigo-600/20 transition-all hover:shadow-lg hover:shadow-indigo-500/30 hover:from-indigo-500 hover:to-indigo-400 focus-visible:outline-none"
+        className="mt-2 flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-600 to-indigo-500 px-5 py-2 text-xs font-semibold text-white shadow-lg shadow-indigo-600/20 transition-all hover:from-indigo-500 hover:to-indigo-400 hover:shadow-lg hover:shadow-indigo-500/30 focus-visible:outline-none"
       >
         <Github size={13} />
         Connect GitHub Account
@@ -507,17 +481,14 @@ function ComposeBox({ user, initial, onPostCreated }) {
       const { data } = await axiosInstance.post("/post/create", {
         content: trimmed,
       });
-
       setContent("");
       removeImage();
       setFocused(false);
       if (textareaRef.current) textareaRef.current.style.height = "auto";
-
       onPostCreated?.(data);
     } catch (err) {
       setError(
-        err.response?.data?.message ??
-          "Failed to create post. Please try again.",
+        err.response?.data?.message ?? "Failed to create post. Please try again.",
       );
     } finally {
       setSubmitting(false);
@@ -548,7 +519,7 @@ function ComposeBox({ user, initial, onPostCreated }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.22, delay: 0.18 }}
       className={
-        "mx-4 rounded-2xl border transition-all duration-200 overflow-hidden " +
+        "mx-4 overflow-hidden rounded-2xl border transition-all duration-200 " +
         (isExpanded
           ? "border-indigo-500/20 bg-gradient-to-b from-white/[0.03] to-white/[0.015] shadow-xl shadow-indigo-950/30"
           : "border-white/[0.06] bg-white/[0.02] hover:border-white/[0.09] hover:bg-white/[0.025]")
@@ -561,12 +532,12 @@ function ComposeBox({ user, initial, onPostCreated }) {
             animate={{ scaleX: 1 }}
             exit={{ scaleX: 0 }}
             transition={{ duration: 0.25 }}
-            className="h-[1.5px] w-full bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent origin-left"
+            className="h-[1.5px] w-full origin-left bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent"
           />
         )}
       </AnimatePresence>
 
-      <div className="flex gap-3 px-4 pt-3.5 pb-2">
+      <div className="flex gap-3 px-4 pb-2 pt-3.5">
         <div className="shrink-0 pt-0.5">
           {user?.profilePic ? (
             <img
@@ -790,10 +761,7 @@ export default function Profile() {
   const [gitHubLoading, setGitHubLoading] = useState(false);
   const [gitHubError, setGitHubError] = useState("");
   const [gitHubConnected, setGitHubConnected] = useState(false);
-  const [followModal, setFollowModal] = useState({
-    open: false,
-    tab: "followers",
-  });
+  const [followModal, setFollowModal] = useState({ open: false, tab: "followers" });
   const [bioModal, setBioModal] = useState(false);
   const [editProfileModal, setEditProfileModal] = useState(false);
 
@@ -820,8 +788,9 @@ export default function Profile() {
         formData,
         { headers: { "Content-Type": "multipart/form-data" } },
       );
+      // ✅ Fixed: was setting "avatar" — API returns "profilePic"
       if (data.imageUrl)
-        setUser((prev) => ({ ...prev, avatar: data.imageUrl }));
+        setUser((prev) => ({ ...prev, profilePic: data.imageUrl }));
     } catch (err) {
       alert(err.response?.data?.message ?? "Upload failed. Please try again.");
     } finally {
@@ -875,7 +844,8 @@ export default function Profile() {
       setLoading(true);
       setError("");
       try {
-        const { data } = await axiosInstance.get("/users");
+        // ✅ Fixed: was "/users" — now correctly calls /users/:username
+        const { data } = await axiosInstance.get(`/users/${username}`);
         if (!cancelled) setUser(data.user);
       } catch (err) {
         if (cancelled) return;
@@ -888,9 +858,7 @@ export default function Profile() {
       }
     };
     fetchUser();
-    return () => {
-      cancelled = true;
-    };
+    return () => { cancelled = true; };
   }, [username]);
 
   // ── Fetch posts ──────────────────────────────────────────────────
@@ -921,9 +889,7 @@ export default function Profile() {
       }
     };
     fetchPosts();
-    return () => {
-      cancelled = true;
-    };
+    return () => { cancelled = true; };
   }, [activeTab, page]);
 
   // ── Fetch GitHub repos ───────────────────────────────────────────
@@ -959,9 +925,7 @@ export default function Profile() {
       }
     };
     fetchGitHubRepos();
-    return () => {
-      cancelled = true;
-    };
+    return () => { cancelled = true; };
   }, [activeTab]);
 
   // Reset posts on tab switch
@@ -1002,9 +966,7 @@ export default function Profile() {
 
   // ── New post prepended to feed ────────────────────────────────────
   const handlePostCreated = (newPost) => {
-    // Unwrap common nested response shapes: { post }, { data }, or the object itself
     const raw = newPost?.post ?? newPost?.data ?? newPost;
-
     if (raw?._id) {
       const enriched = {
         ...raw,
@@ -1020,12 +982,11 @@ export default function Profile() {
         prev ? { ...prev, postCount: (prev.postCount ?? 0) + 1 } : prev,
       );
     } else {
-      // API didn't return the post object — silently refetch instead of clearing
       setPage(1);
     }
   };
 
-  // ── Post deleted: remove from feed ───────────────────────────────
+  // ── Post deleted ─────────────────────────────────────────────────
   const handlePostDeleted = (postId) => {
     setPosts((prev) => prev.filter((p) => p._id !== postId));
     setUser((prev) =>
@@ -1111,13 +1072,9 @@ export default function Profile() {
               <Loader2 size={26} className="animate-spin text-indigo-400" />
             </div>
             <div className="text-center">
-              <p className="text-sm font-semibold text-white">
-                Signing you out…
-              </p>
+              <p className="text-sm font-semibold text-white">Signing you out…</p>
               <p className="mt-1 text-xs text-gray-500">
-                {"See you soon, " +
-                  (user?.name?.split(" ")[0] ?? "friend") +
-                  " 👋"}
+                {"See you soon, " + (user?.name?.split(" ")[0] ?? "friend") + " 👋"}
               </p>
             </div>
           </motion.div>
@@ -1243,10 +1200,8 @@ export default function Profile() {
             </>
           )}
 
-          {/* Hover darkening overlay — desktop only */}
           <div className="absolute inset-0 bg-black/0 transition-all duration-200 group-hover:bg-black/30" />
 
-          {/* Full uploading overlay */}
           <AnimatePresence>
             {coverUploading && (
               <motion.div
@@ -1267,7 +1222,6 @@ export default function Profile() {
             )}
           </AnimatePresence>
 
-          {/* Edit cover button — always visible on mobile, hover-only on desktop */}
           <button
             aria-label="Change cover photo"
             onClick={() => coverInputRef.current?.click()}
@@ -1303,7 +1257,6 @@ export default function Profile() {
                 </div>
               )}
 
-              {/* Full uploading overlay on the avatar */}
               <AnimatePresence>
                 {avatarUploading && (
                   <motion.div
@@ -1321,7 +1274,6 @@ export default function Profile() {
                 )}
               </AnimatePresence>
 
-              {/* Click target — full circle overlay */}
               <button
                 aria-label="Change avatar"
                 onClick={() => avatarInputRef.current?.click()}
@@ -1329,14 +1281,13 @@ export default function Profile() {
                 className="absolute inset-0 rounded-full focus-visible:outline-none disabled:pointer-events-none"
               />
 
-              {/* Camera badge — always visible, glows on hover */}
               <div
                 onClick={() => !avatarUploading && avatarInputRef.current?.click()}
                 className={
                   "absolute -bottom-1 -right-1 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full border-2 border-[#070c18] shadow-lg transition-all duration-200 " +
                   (avatarUploading
-                    ? "bg-indigo-500/50 pointer-events-none"
-                    : "bg-indigo-500 hover:bg-indigo-400 hover:scale-110")
+                    ? "pointer-events-none bg-indigo-500/50"
+                    : "bg-indigo-500 hover:scale-110 hover:bg-indigo-400")
                 }
               >
                 {avatarUploading ? (
@@ -1377,7 +1328,7 @@ export default function Profile() {
                   className={
                     "text-[11px] " +
                     (onClick
-                      ? "text-gray-400 hover:text-indigo-400 transition-colors"
+                      ? "text-gray-400 transition-colors hover:text-indigo-400"
                       : "text-gray-500")
                   }
                 >
@@ -1407,9 +1358,7 @@ export default function Profile() {
                 Online
               </span>
             </div>
-            <p className="mt-0.5 text-sm text-gray-500">
-              {"@" + user.username}
-            </p>
+            <p className="mt-0.5 text-sm text-gray-500">{"@" + user.username}</p>
           </motion.div>
 
           <motion.div
@@ -1451,11 +1400,7 @@ export default function Profile() {
 
         {/* ── Compose Box ── */}
         <div className="mt-5">
-          <ComposeBox
-            user={user}
-            initial={initial}
-            onPostCreated={handlePostCreated}
-          />
+          <ComposeBox user={user} initial={initial} onPostCreated={handlePostCreated} />
         </div>
 
         {/* ── Tabs ── */}
@@ -1524,10 +1469,7 @@ export default function Profile() {
                     </div>
                     <p className="text-xs text-gray-500">{postsError}</p>
                     <button
-                      onClick={() => {
-                        setPosts([]);
-                        setPage(1);
-                      }}
+                      onClick={() => { setPosts([]); setPage(1); }}
                       className="rounded-xl border border-white/[0.07] px-4 py-2 text-xs font-medium text-gray-400 hover:bg-white/[0.05] hover:text-white"
                     >
                       Retry
@@ -1541,7 +1483,6 @@ export default function Profile() {
 
                 {posts.length > 0 && (
                   <>
-                    {/* AnimatePresence on the list enables exit animations for deleted posts */}
                     <AnimatePresence initial={false}>
                       {posts.map((post, i) => (
                         <PostCard
@@ -1626,7 +1567,7 @@ export default function Profile() {
                   gitHubRepos.length === 0 &&
                   !gitHubLoading &&
                   !gitHubError && (
-                    <div className="flex flex-col items-center gap-3 py-12 text-center px-4">
+                    <div className="flex flex-col items-center gap-3 px-4 py-12 text-center">
                       <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/[0.06] bg-white/[0.02]">
                         <Github size={20} className="text-gray-700" />
                       </div>
@@ -1647,6 +1588,7 @@ export default function Profile() {
 
         <div className="h-10" />
       </div>
+
       <FollowModel
         isOpen={followModal.open}
         defaultTab={followModal.tab}

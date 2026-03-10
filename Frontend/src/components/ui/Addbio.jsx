@@ -51,7 +51,7 @@ export default function AddBio({ isOpen, onClose, currentBio = "", onSaved }) {
   const [bio, setBio] = useState(currentBio);
   const [saving, setSaving] = useState(false);
   const [status, setStatus] = useState(null);
-  const [newsuggestion, setNewSuggestion] = useState(12);;
+  const [newsuggestion, setNewSuggestion] = useState(7);;
   const [prev,setprev] = useState(0);
   const [errorMsg, setErrorMsg] = useState("");
   const textareaRef = useRef(null);
@@ -99,11 +99,11 @@ export default function AddBio({ isOpen, onClose, currentBio = "", onSaved }) {
   const moresuggestion = () =>{
     if(newsuggestion >= BIO_SUGGESTIONS.length) {
       setprev(0);
-      setNewSuggestion(12);
+      setNewSuggestion(7);
       return;
     }
     setprev(newsuggestion);
-    setNewSuggestion(newsuggestion + 12);
+    setNewSuggestion(newsuggestion + 7);
   }
 
   const handleTextareaChange = (e) => {

@@ -4,6 +4,7 @@ const { hashPassword, comparePassword } = require("../utils/hashpass");
 const generateOtp = require("../utils/otp");
 const sendEmail = require("../utils/sendemail");
 const Otp = require("../models/otpmodel");
+const Post = require("../models/postmodel");
 
 //register
 exports.register = async (req, res, next) => {
@@ -39,13 +40,12 @@ exports.register = async (req, res, next) => {
     await sendEmail(
       email,
       "Verify Your Linkora Account",
-      `Your OTP is ${otp}`
-    ).catch(err => console.error("Email failed:", err));
+      `Your OTP is ${otp}`,
+    ).catch((err) => console.error("Email failed:", err));
 
-      res.status(201).json({
+    res.status(201).json({
       message: "User registered successfully",
     });
-
   } catch (error) {
     next(error);
   }
@@ -78,17 +78,20 @@ exports.login = async (req, res, next) => {
 
     const token = generateToken(user._id);
 
-res.cookie("token", token, {
-  httpOnly: true,
-  secure: true,
-  sameSite: "none",
-  path: "/",
-  maxAge: 7 * 24 * 60 * 60 * 1000,
-});
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      path: "/",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
 
     res.status(200).json({
-      success:"login "
+      success: "login ",
+      username: user.username,
     });
+    await Post.updateMany({ author: user._id }, { $set: { isDisabled: false } });
+    await Post.save();
   } catch (error) {
     next(error);
   }
@@ -118,13 +121,13 @@ exports.verifyOtp = async (req, res, next) => {
 
     const token = generateToken(user._id);
 
-res.cookie("token", token, {
-  httpOnly: true,
-  secure: true,
-  sameSite: "none",
-  path: "/",
-  maxAge: 7 * 24 * 60 * 60 * 1000,
-});
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      path: "/",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
 
     await Otp.deleteMany({ user: user._id });
 
@@ -138,13 +141,13 @@ res.cookie("token", token, {
 
 //Logout
 exports.logout = async (req, res) => {
-res.cookie("token", "", {
-  httpOnly: true,
-  secure: true,
-  sameSite: "none",
-  path: "/",
-  maxAge: 7 * 24 * 60 * 60 * 1000,
-});
+  res.cookie("token", "", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    path: "/",
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  });
 
   res.status(200).json({ message: "Logged out successfully" });
 };

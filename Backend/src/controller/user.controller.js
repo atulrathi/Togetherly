@@ -4,6 +4,7 @@ const Post = require("../models/postmodel");
 const getUserByUsername = async (req, res) => {
   try {
     const id = req.user._id;
+    const username = req.params.username;
 
     const user = await User.findOne({ _id: id  , isDisabled: false })
       .select("-password -googleId -__v")
@@ -16,8 +17,15 @@ const getUserByUsername = async (req, res) => {
       });
     }
 
+    if(user.username !== username){
+      return res.status(403).json({
+        success: false,
+        message: "You are not authorized to view this user's profile.",
+      });
+    }
+
     // Fetch the user's post count in parallel — no need to load all posts.
-    const postCount = await Post.countDocuments({ author: id , isDeleted: false });
+    const postCount = await Post.countDocuments({ author: id , isDisabled: false });
 
     return res.status(200).json({
       success: true,
@@ -94,8 +102,8 @@ const uploadcoverphoto = async (req, res) => {
 const addBio = async (req, res) => {
   try {
     const { bio } = req.body;
-    const userid = req.user._id
-    const user = await User.findById(userid);
+    const userid = req.user._id;
+    const user = await User.findById(userid , { isDisabled: false });
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });

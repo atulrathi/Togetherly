@@ -47,7 +47,7 @@ export default function Login() {
         password: form.password,
       });
 
-      navigate(`/home/${user.data.user}`);
+      navigate(`/home/${user.data.username}`);
 
     } catch (err) {
       const status = err.response?.status;

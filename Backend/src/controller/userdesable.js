@@ -9,7 +9,7 @@ const disableUser = async (req, res) => {
 
     await Post.updateMany(
       { author: userId },
-      { $set: { isDeleted: true } }
+      { $set: { isDisabled: true } }
     );
 
     res.status(200).json({
