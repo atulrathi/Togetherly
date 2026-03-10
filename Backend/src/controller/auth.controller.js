@@ -37,11 +37,11 @@ exports.register = async (req, res, next) => {
       expiresAt: new Date(Date.now() + 10 * 60 * 1000),
     });
 
-    await sendEmail(
-      email,
-      "Verify Your Linkora Account",
-      `Your OTP is ${otp}`,
-    ).catch((err) => console.error("Email failed:", err));
+await sendEmail(
+  email,
+  "Verify Your Linkora Account",
+  `Your OTP is ${otp}`
+);
 
     res.status(201).json({
       message: "User registered successfully",
